@@ -11,6 +11,8 @@ import { Search, Filter, Plus, LogIn, User, Star, ExternalLink } from "lucide-re
 import { useToast } from "@/hooks/use-toast";
 import AuthDialog from "@/components/AuthDialog";
 import AddToolDialog from "@/components/AddToolDialog";
+import Logo from "@/components/Logo";
+import ThemeToggle from "@/components/ThemeToggle";
 
 interface AITool {
   id: string;
@@ -327,33 +329,27 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-background via-background/80 to-background overflow-hidden">
       {/* Animated background particles */}
       <div className="fixed inset-0 z-0">
-        <div className="absolute top-20 left-10 w-2 h-2 bg-purple-400 rounded-full animate-pulse"></div>
-        <div className="absolute top-40 right-20 w-1 h-1 bg-blue-400 rounded-full animate-ping"></div>
-        <div className="absolute bottom-40 left-20 w-3 h-3 bg-pink-400 rounded-full animate-bounce"></div>
-        <div className="absolute bottom-20 right-40 w-2 h-2 bg-cyan-400 rounded-full animate-pulse"></div>
-        <div className="absolute top-60 left-1/2 w-1 h-1 bg-yellow-400 rounded-full animate-ping"></div>
+        <div className="absolute top-20 left-10 w-2 h-2 bg-primary/60 rounded-full animate-pulse"></div>
+        <div className="absolute top-40 right-20 w-1 h-1 bg-accent/60 rounded-full animate-ping"></div>
+        <div className="absolute bottom-40 left-20 w-3 h-3 bg-secondary/60 rounded-full animate-bounce"></div>
+        <div className="absolute bottom-20 right-40 w-2 h-2 bg-muted/60 rounded-full animate-pulse"></div>
+        <div className="absolute top-60 left-1/2 w-1 h-1 bg-primary/40 rounded-full animate-ping"></div>
       </div>
 
       {/* Header */}
-      <header className="border-b border-white/10 backdrop-blur-sm bg-black/20 relative z-10 animate-fade-in">
+      <header className="border-b border-border/50 backdrop-blur-sm bg-background/80 relative z-10 animate-fade-in">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-2 group">
-              <div className="w-8 h-8 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full flex items-center justify-center transition-transform duration-300 group-hover:scale-110 group-hover:rotate-12">
-                <span className="text-white font-bold text-sm">AI</span>
-              </div>
-              <h1 className="text-2xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent transition-all duration-300 group-hover:from-pink-400 group-hover:to-cyan-400">
-                AI Galaxy
-              </h1>
-            </div>
+            <Logo />
             
             <div className="flex items-center space-x-4">
+              <ThemeToggle />
               {isLoggedIn ? (
                 <div className="flex items-center space-x-3 animate-fade-in">
-                  <span className="text-white/80 text-sm">Welcome, {currentUser}</span>
+                  <span className="text-muted-foreground text-sm">Welcome, {currentUser}</span>
                   <Button variant="outline" size="sm" onClick={handleLogout} className="hover:scale-105 transition-transform duration-200">
                     Logout
                   </Button>
@@ -374,27 +370,27 @@ const Index = () => {
       {/* Hero Section */}
       <section className="py-20 text-center relative z-10">
         <div className="container mx-auto px-4">
-          <h2 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 bg-clip-text text-transparent animate-fade-in">
+          <h2 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-primary via-accent to-secondary bg-clip-text text-transparent animate-fade-in">
             Discover AI Tools
           </h2>
-          <p className="text-xl text-white/70 mb-8 max-w-2xl mx-auto animate-fade-in" style={{ animationDelay: '200ms' }}>
+          <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto animate-fade-in" style={{ animationDelay: '200ms' }}>
             Explore the universe of artificial intelligence tools. Find, filter, and discover the perfect AI solution for your needs.
           </p>
           
           {/* Search and Filter Bar */}
           <div className="max-w-4xl mx-auto flex flex-col md:flex-row gap-4 mb-8 animate-fade-in" style={{ animationDelay: '400ms' }}>
             <div className="relative flex-1 group">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white/50 w-4 h-4 transition-colors group-focus-within:text-purple-400" />
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4 transition-colors group-focus-within:text-primary" />
               <Input
                 placeholder="Search AI tools..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10 bg-white/10 border-white/20 text-white placeholder:text-white/50 transition-all duration-300 focus:bg-white/15 focus:border-purple-400 focus:scale-105"
+                className="pl-10 transition-all duration-300 focus:scale-105"
               />
             </div>
             
             <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-              <SelectTrigger className="w-full md:w-48 bg-white/10 border-white/20 text-white transition-all duration-300 hover:bg-white/15 hover:scale-105">
+              <SelectTrigger className="w-full md:w-48 transition-all duration-300 hover:scale-105">
                 <Filter className="w-4 h-4 mr-2" />
                 <SelectValue />
               </SelectTrigger>
@@ -408,7 +404,7 @@ const Index = () => {
             </Select>
 
             <Select value={selectedPricing} onValueChange={setSelectedPricing}>
-              <SelectTrigger className="w-full md:w-48 bg-white/10 border-white/20 text-white transition-all duration-300 hover:bg-white/15 hover:scale-105">
+              <SelectTrigger className="w-full md:w-48 transition-all duration-300 hover:scale-105">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
@@ -421,7 +417,7 @@ const Index = () => {
             </Select>
 
             <AddToolDialog onAddTool={handleAddTool}>
-              <Button className="bg-gradient-to-r from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600 transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-purple-500/25">
+              <Button className="bg-gradient-to-r from-primary to-secondary hover:opacity-90 transition-all duration-300 hover:scale-105 hover:shadow-lg">
                 <Plus className="w-4 h-4 mr-2" />
                 Add Tool
               </Button>
@@ -437,27 +433,27 @@ const Index = () => {
             {filteredTools.map((tool, index) => (
               <Card 
                 key={tool.id} 
-                className="bg-white/5 border-white/10 hover:bg-white/10 transition-all duration-500 hover:scale-105 hover:shadow-xl hover:shadow-purple-500/20 group animate-fade-in"
+                className="border-border/50 hover:border-border transition-all duration-500 hover:scale-105 hover:shadow-xl group animate-fade-in"
                 style={{ animationDelay: `${index * 50}ms` }}
               >
                 <CardHeader>
                   <div className="flex items-start justify-between">
                     <div className="flex-1">
-                      <CardTitle className="text-white group-hover:text-purple-300 transition-colors duration-300">
+                      <CardTitle className="text-foreground group-hover:text-primary transition-colors duration-300">
                         {tool.name}
                       </CardTitle>
                       <div className="flex items-center gap-2 mt-2">
-                        <Badge variant="secondary" className="bg-purple-500/20 text-purple-300 border-purple-500/30 transition-all duration-300 group-hover:bg-purple-500/30 group-hover:scale-105">
+                        <Badge variant="secondary" className="transition-all duration-300 group-hover:scale-105">
                           {tool.category}
                         </Badge>
                         {tool.isPremium && (
-                          <Badge variant="outline" className="border-yellow-500/50 text-yellow-400 transition-all duration-300 group-hover:border-yellow-400 group-hover:text-yellow-300 group-hover:scale-105">
+                          <Badge variant="outline" className="border-yellow-500/50 text-yellow-600 dark:text-yellow-400 transition-all duration-300 group-hover:border-yellow-400 group-hover:scale-105">
                             Premium
                           </Badge>
                         )}
                       </div>
                     </div>
-                    <div className="flex items-center space-x-1 text-yellow-400 transition-all duration-300 group-hover:scale-110">
+                    <div className="flex items-center space-x-1 text-yellow-600 dark:text-yellow-400 transition-all duration-300 group-hover:scale-110">
                       <Star className="w-4 h-4 fill-current" />
                       <span className="text-sm">{tool.rating}</span>
                     </div>
@@ -465,7 +461,7 @@ const Index = () => {
                 </CardHeader>
                 
                 <CardContent>
-                  <CardDescription className="text-white/70 mb-4 group-hover:text-white/90 transition-colors duration-300">
+                  <CardDescription className="text-muted-foreground mb-4 group-hover:text-foreground/80 transition-colors duration-300">
                     {tool.description}
                   </CardDescription>
                   
@@ -474,7 +470,7 @@ const Index = () => {
                       <Badge 
                         key={tag} 
                         variant="outline" 
-                        className="text-xs border-white/20 text-white/60 transition-all duration-300 hover:border-white/40 hover:text-white/80 hover:scale-105"
+                        className="text-xs transition-all duration-300 hover:scale-105"
                         style={{ animationDelay: `${tagIndex * 100}ms` }}
                       >
                         {tag}
@@ -483,7 +479,7 @@ const Index = () => {
                   </div>
                   
                   <Button 
-                    className="w-full bg-gradient-to-r from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600 transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-purple-500/25"
+                    className="w-full bg-gradient-to-r from-primary to-secondary hover:opacity-90 transition-all duration-300 hover:scale-105 hover:shadow-lg"
                     onClick={() => window.open(tool.url, '_blank')}
                   >
                     <ExternalLink className="w-4 h-4 mr-2 transition-transform duration-300 group-hover:scale-110" />
@@ -496,17 +492,17 @@ const Index = () => {
           
           {filteredTools.length === 0 && (
             <div className="text-center py-12 animate-fade-in">
-              <p className="text-white/60 text-lg">No AI tools found matching your criteria.</p>
-              <p className="text-white/40 mt-2">Try adjusting your search or filters.</p>
+              <p className="text-muted-foreground text-lg">No AI tools found matching your criteria.</p>
+              <p className="text-muted-foreground/60 mt-2">Try adjusting your search or filters.</p>
             </div>
           )}
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="border-t border-white/10 py-8 mt-20 relative z-10 animate-fade-in">
+      <footer className="border-t border-border/50 py-8 mt-20 relative z-10 animate-fade-in">
         <div className="container mx-auto px-4 text-center">
-          <p className="text-white/60">
+          <p className="text-muted-foreground">
             © 2024 AI Galaxy. Discover the universe of artificial intelligence tools.
           </p>
         </div>
