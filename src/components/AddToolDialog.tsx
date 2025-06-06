@@ -31,7 +31,8 @@ const categories = [
   "Writing Assistant",
   "Video Generation",
   "Audio Processing",
-  "Data Analysis"
+  "Data Analysis",
+  "PPT Tools"
 ];
 
 const AddToolDialog = ({ children, onAddTool }: AddToolDialogProps) => {
@@ -89,8 +90,8 @@ const AddToolDialog = ({ children, onAddTool }: AddToolDialogProps) => {
       <DialogTrigger asChild>
         {children}
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[500px] bg-slate-900 border-white/10 max-h-[90vh] overflow-y-auto">
-        <DialogHeader>
+      <DialogContent className="sm:max-w-[500px] bg-slate-900 border-white/10 max-h-[90vh] overflow-y-auto animate-scale-in">
+        <DialogHeader className="animate-fade-in">
           <DialogTitle className="text-white">Add New AI Tool</DialogTitle>
           <DialogDescription className="text-white/70">
             Share an amazing AI tool with the community
@@ -98,33 +99,33 @@ const AddToolDialog = ({ children, onAddTool }: AddToolDialogProps) => {
         </DialogHeader>
         
         <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="space-y-2">
+          <div className="space-y-2 animate-fade-in" style={{ animationDelay: '100ms' }}>
             <Label htmlFor="tool-name" className="text-white">Tool Name *</Label>
             <Input
               id="tool-name"
               value={formData.name}
               onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
-              className="bg-white/5 border-white/20 text-white placeholder:text-white/50"
+              className="bg-white/5 border-white/20 text-white placeholder:text-white/50 transition-all duration-300 focus:bg-white/10 focus:border-purple-400"
               placeholder="e.g., ChatGPT"
             />
           </div>
 
-          <div className="space-y-2">
+          <div className="space-y-2 animate-fade-in" style={{ animationDelay: '150ms' }}>
             <Label htmlFor="tool-description" className="text-white">Description *</Label>
             <Textarea
               id="tool-description"
               value={formData.description}
               onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))}
-              className="bg-white/5 border-white/20 text-white placeholder:text-white/50"
+              className="bg-white/5 border-white/20 text-white placeholder:text-white/50 transition-all duration-300 focus:bg-white/10 focus:border-purple-400"
               placeholder="Describe what this AI tool does..."
               rows={3}
             />
           </div>
 
-          <div className="space-y-2">
+          <div className="space-y-2 animate-fade-in" style={{ animationDelay: '200ms' }}>
             <Label htmlFor="tool-category" className="text-white">Category *</Label>
             <Select value={formData.category} onValueChange={(value) => setFormData(prev => ({ ...prev, category: value }))}>
-              <SelectTrigger className="bg-white/5 border-white/20 text-white">
+              <SelectTrigger className="bg-white/5 border-white/20 text-white transition-all duration-300 hover:bg-white/10">
                 <SelectValue placeholder="Select a category" />
               </SelectTrigger>
               <SelectContent>
@@ -137,19 +138,19 @@ const AddToolDialog = ({ children, onAddTool }: AddToolDialogProps) => {
             </Select>
           </div>
 
-          <div className="space-y-2">
+          <div className="space-y-2 animate-fade-in" style={{ animationDelay: '250ms' }}>
             <Label htmlFor="tool-url" className="text-white">Website URL *</Label>
             <Input
               id="tool-url"
               type="url"
               value={formData.url}
               onChange={(e) => setFormData(prev => ({ ...prev, url: e.target.value }))}
-              className="bg-white/5 border-white/20 text-white placeholder:text-white/50"
+              className="bg-white/5 border-white/20 text-white placeholder:text-white/50 transition-all duration-300 focus:bg-white/10 focus:border-purple-400"
               placeholder="https://example.com"
             />
           </div>
 
-          <div className="space-y-2">
+          <div className="space-y-2 animate-fade-in" style={{ animationDelay: '300ms' }}>
             <Label htmlFor="tool-rating" className="text-white">Rating (1-5)</Label>
             <Input
               id="tool-rating"
@@ -159,22 +160,22 @@ const AddToolDialog = ({ children, onAddTool }: AddToolDialogProps) => {
               step="0.1"
               value={formData.rating}
               onChange={(e) => setFormData(prev => ({ ...prev, rating: parseFloat(e.target.value) }))}
-              className="bg-white/5 border-white/20 text-white placeholder:text-white/50"
+              className="bg-white/5 border-white/20 text-white placeholder:text-white/50 transition-all duration-300 focus:bg-white/10 focus:border-purple-400"
             />
           </div>
 
-          <div className="space-y-2">
+          <div className="space-y-2 animate-fade-in" style={{ animationDelay: '350ms' }}>
             <Label htmlFor="tool-tags" className="text-white">Tags (comma-separated)</Label>
             <Input
               id="tool-tags"
               value={formData.tags}
               onChange={(e) => setFormData(prev => ({ ...prev, tags: e.target.value }))}
-              className="bg-white/5 border-white/20 text-white placeholder:text-white/50"
+              className="bg-white/5 border-white/20 text-white placeholder:text-white/50 transition-all duration-300 focus:bg-white/10 focus:border-purple-400"
               placeholder="e.g., chatbot, writing, coding"
             />
           </div>
 
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center space-x-2 animate-fade-in" style={{ animationDelay: '400ms' }}>
             <Switch
               id="tool-premium"
               checked={formData.isPremium}
@@ -183,18 +184,18 @@ const AddToolDialog = ({ children, onAddTool }: AddToolDialogProps) => {
             <Label htmlFor="tool-premium" className="text-white">Premium Tool</Label>
           </div>
 
-          <div className="flex gap-3 pt-4">
+          <div className="flex gap-3 pt-4 animate-fade-in" style={{ animationDelay: '450ms' }}>
             <Button 
               type="button" 
               variant="outline" 
               onClick={() => setIsOpen(false)}
-              className="flex-1"
+              className="flex-1 transition-all duration-300 hover:scale-105"
             >
               Cancel
             </Button>
             <Button 
               type="submit" 
-              className="flex-1 bg-gradient-to-r from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600"
+              className="flex-1 bg-gradient-to-r from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600 transition-all duration-300 hover:scale-105"
             >
               Add Tool
             </Button>
