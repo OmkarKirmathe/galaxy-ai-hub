@@ -240,18 +240,25 @@ const categories = [
   "PPT Tools"
 ];
 
+const pricingOptions = [
+  "All Tools",
+  "Free Only",
+  "Premium Only"
+];
+
 const Index = () => {
   const [tools, setTools] = useState<AITool[]>(mockTools);
   const [filteredTools, setFilteredTools] = useState<AITool[]>(mockTools);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All Categories");
+  const [selectedPricing, setSelectedPricing] = useState("All Tools");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState<string | null>(null);
   const { toast } = useToast();
 
   useEffect(() => {
     filterTools();
-  }, [searchTerm, selectedCategory, tools]);
+  }, [searchTerm, selectedCategory, selectedPricing, tools]);
 
   const filterTools = () => {
     let filtered = tools;
@@ -266,6 +273,14 @@ const Index = () => {
 
     if (selectedCategory !== "All Categories") {
       filtered = filtered.filter(tool => tool.category === selectedCategory);
+    }
+
+    if (selectedPricing !== "All Tools") {
+      if (selectedPricing === "Free Only") {
+        filtered = filtered.filter(tool => !tool.isPremium);
+      } else if (selectedPricing === "Premium Only") {
+        filtered = filtered.filter(tool => tool.isPremium);
+      }
     }
 
     setFilteredTools(filtered);
@@ -363,12 +378,12 @@ const Index = () => {
           <h2 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 bg-clip-text text-transparent animate-fade-in">
             Discover AI Tools
           </h2>
-          <p className="text-xl text-white/70 mb-8 max-w-2xl mx-auto animate-fade-in animation-delay-200">
+          <p className="text-xl text-white/70 mb-8 max-w-2xl mx-auto animate-fade-in" style={{ animationDelay: '200ms' }}>
             Explore the universe of artificial intelligence tools. Find, filter, and discover the perfect AI solution for your needs.
           </p>
           
           {/* Search and Filter Bar */}
-          <div className="max-w-4xl mx-auto flex flex-col md:flex-row gap-4 mb-8 animate-fade-in animation-delay-400">
+          <div className="max-w-4xl mx-auto flex flex-col md:flex-row gap-4 mb-8 animate-fade-in" style={{ animationDelay: '400ms' }}>
             <div className="relative flex-1 group">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white/50 w-4 h-4 transition-colors group-focus-within:text-purple-400" />
               <Input
@@ -388,6 +403,19 @@ const Index = () => {
                 {categories.map(category => (
                   <SelectItem key={category} value={category}>
                     {category}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+
+            <Select value={selectedPricing} onValueChange={setSelectedPricing}>
+              <SelectTrigger className="w-full md:w-48 bg-white/10 border-white/20 text-white transition-all duration-300 hover:bg-white/15 hover:scale-105">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                {pricingOptions.map(option => (
+                  <SelectItem key={option} value={option}>
+                    {option}
                   </SelectItem>
                 ))}
               </SelectContent>
