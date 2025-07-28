@@ -7,7 +7,7 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, Di
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Search, Filter, Plus, LogIn, User, Star, ExternalLink } from "lucide-react";
+import { Search, Filter, Plus, LogIn, User, Star, ExternalLink, MessageSquare, Palette, Code, Pen, Video, Mic, BarChart, Presentation, Zap, Bot, Camera, Layers, Volume2, FileText, Sparkles, Edit3, Image } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import AuthDialog from "@/components/AuthDialog";
 import AddToolDialog from "@/components/AddToolDialog";
@@ -24,6 +24,7 @@ interface AITool {
   isPremium: boolean;
   tags: string[];
   addedBy?: string;
+  icon: string;
 }
 
 const mockTools: AITool[] = [
@@ -35,7 +36,8 @@ const mockTools: AITool[] = [
     url: "https://chat.openai.com",
     rating: 4.8,
     isPremium: false,
-    tags: ["chatbot", "writing", "coding"]
+    tags: ["chatbot", "writing", "coding"],
+    icon: "MessageSquare"
   },
   {
     id: "2",
@@ -45,7 +47,8 @@ const mockTools: AITool[] = [
     url: "https://openai.com/dall-e-3",
     rating: 4.7,
     isPremium: true,
-    tags: ["image", "art", "creative"]
+    tags: ["image", "art", "creative"],
+    icon: "Image"
   },
   {
     id: "3",
@@ -55,7 +58,8 @@ const mockTools: AITool[] = [
     url: "https://github.com/features/copilot",
     rating: 4.6,
     isPremium: true,
-    tags: ["coding", "development", "autocomplete"]
+    tags: ["coding", "development", "autocomplete"],
+    icon: "Code"
   },
   {
     id: "4",
@@ -65,7 +69,8 @@ const mockTools: AITool[] = [
     url: "https://midjourney.com",
     rating: 4.9,
     isPremium: true,
-    tags: ["art", "discord", "creative"]
+    tags: ["art", "discord", "creative"],
+    icon: "Palette"
   },
   {
     id: "5",
@@ -75,7 +80,8 @@ const mockTools: AITool[] = [
     url: "https://grammarly.com",
     rating: 4.5,
     isPremium: false,
-    tags: ["grammar", "writing", "editing"]
+    tags: ["grammar", "writing", "editing"],
+    icon: "Edit3"
   },
   {
     id: "6",
@@ -85,7 +91,8 @@ const mockTools: AITool[] = [
     url: "https://runwayml.com",
     rating: 4.4,
     isPremium: true,
-    tags: ["video", "editing", "creative"]
+    tags: ["video", "editing", "creative"],
+    icon: "Video"
   },
   {
     id: "7",
@@ -95,7 +102,8 @@ const mockTools: AITool[] = [
     url: "https://claude.ai",
     rating: 4.7,
     isPremium: false,
-    tags: ["chatbot", "analysis", "writing"]
+    tags: ["chatbot", "analysis", "writing"],
+    icon: "Bot"
   },
   {
     id: "8",
@@ -105,7 +113,8 @@ const mockTools: AITool[] = [
     url: "https://stability.ai/stable-diffusion",
     rating: 4.6,
     isPremium: false,
-    tags: ["open-source", "image", "art"]
+    tags: ["open-source", "image", "art"],
+    icon: "Sparkles"
   },
   {
     id: "9",
@@ -115,7 +124,8 @@ const mockTools: AITool[] = [
     url: "https://cursor.sh",
     rating: 4.8,
     isPremium: true,
-    tags: ["coding", "editor", "ai-pair"]
+    tags: ["coding", "editor", "ai-pair"],
+    icon: "Zap"
   },
   {
     id: "10",
@@ -125,7 +135,8 @@ const mockTools: AITool[] = [
     url: "https://openai.com/research/whisper",
     rating: 4.5,
     isPremium: false,
-    tags: ["speech", "transcription", "audio"]
+    tags: ["speech", "transcription", "audio"],
+    icon: "Mic"
   },
   {
     id: "11",
@@ -135,7 +146,8 @@ const mockTools: AITool[] = [
     url: "https://elevenlabs.io",
     rating: 4.7,
     isPremium: true,
-    tags: ["voice", "synthesis", "cloning"]
+    tags: ["voice", "synthesis", "cloning"],
+    icon: "Volume2"
   },
   {
     id: "12",
@@ -145,7 +157,8 @@ const mockTools: AITool[] = [
     url: "https://jupyter-ai.readthedocs.io",
     rating: 4.3,
     isPremium: false,
-    tags: ["data", "jupyter", "ml"]
+    tags: ["data", "jupyter", "ml"],
+    icon: "BarChart"
   },
   {
     id: "13",
@@ -155,7 +168,8 @@ const mockTools: AITool[] = [
     url: "https://gamma.app",
     rating: 4.6,
     isPremium: true,
-    tags: ["presentations", "slides", "automation"]
+    tags: ["presentations", "slides", "automation"],
+    icon: "Presentation"
   },
   {
     id: "14",
@@ -165,7 +179,8 @@ const mockTools: AITool[] = [
     url: "https://beautiful.ai",
     rating: 4.4,
     isPremium: true,
-    tags: ["presentations", "design", "templates"]
+    tags: ["presentations", "design", "templates"],
+    icon: "Layers"
   },
   {
     id: "15",
@@ -175,7 +190,8 @@ const mockTools: AITool[] = [
     url: "https://tome.app",
     rating: 4.5,
     isPremium: true,
-    tags: ["storytelling", "presentations", "documents"]
+    tags: ["storytelling", "presentations", "documents"],
+    icon: "FileText"
   },
   {
     id: "16",
@@ -185,7 +201,8 @@ const mockTools: AITool[] = [
     url: "https://slidesgo.com/ai-presentations",
     rating: 4.3,
     isPremium: false,
-    tags: ["templates", "presentations", "generator"]
+    tags: ["templates", "presentations", "generator"],
+    icon: "Presentation"
   },
   {
     id: "17",
@@ -195,7 +212,8 @@ const mockTools: AITool[] = [
     url: "https://decktopus.com",
     rating: 4.2,
     isPremium: true,
-    tags: ["presentations", "ai-design", "templates"]
+    tags: ["presentations", "ai-design", "templates"],
+    icon: "Layers"
   },
   {
     id: "18",
@@ -205,7 +223,8 @@ const mockTools: AITool[] = [
     url: "https://jasper.ai",
     rating: 4.4,
     isPremium: true,
-    tags: ["marketing", "copywriting", "content"]
+    tags: ["marketing", "copywriting", "content"],
+    icon: "Pen"
   },
   {
     id: "19",
@@ -215,7 +234,8 @@ const mockTools: AITool[] = [
     url: "https://copy.ai",
     rating: 4.3,
     isPremium: true,
-    tags: ["copywriting", "marketing", "sales"]
+    tags: ["copywriting", "marketing", "sales"],
+    icon: "Edit3"
   },
   {
     id: "20",
@@ -225,7 +245,8 @@ const mockTools: AITool[] = [
     url: "https://lumalabs.ai",
     rating: 4.5,
     isPremium: true,
-    tags: ["3d", "capture", "rendering"]
+    tags: ["3d", "capture", "rendering"],
+    icon: "Camera"
   }
 ];
 
@@ -285,6 +306,14 @@ const Index = () => {
     }
 
     setFilteredTools(filtered);
+  };
+
+  const getIconComponent = (iconName: string) => {
+    const icons: Record<string, React.ComponentType<any>> = {
+      MessageSquare, Palette, Code, Pen, Video, Mic, BarChart, Presentation, 
+      Zap, Bot, Camera, Layers, Volume2, FileText, Sparkles, Edit3, Image
+    };
+    return icons[iconName] || Bot;
   };
 
   const handleAddTool = (newTool: Omit<AITool, 'id' | 'addedBy'>) => {
@@ -439,9 +468,15 @@ const Index = () => {
                 <CardHeader>
                   <div className="flex items-start justify-between">
                     <div className="flex-1">
-                      <CardTitle className="text-foreground group-hover:text-primary transition-colors duration-300">
-                        {tool.name}
-                      </CardTitle>
+                      <div className="flex items-center gap-3 mb-2">
+                        {(() => {
+                          const IconComponent = getIconComponent(tool.icon);
+                          return <IconComponent className="w-8 h-8 text-primary group-hover:scale-110 transition-transform duration-300" />;
+                        })()}
+                        <CardTitle className="text-foreground group-hover:text-primary transition-colors duration-300">
+                          {tool.name}
+                        </CardTitle>
+                      </div>
                       <div className="flex items-center gap-2 mt-2">
                         <Badge variant="secondary" className="transition-all duration-300 group-hover:scale-105">
                           {tool.category}
