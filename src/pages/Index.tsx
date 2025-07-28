@@ -14,6 +14,28 @@ import AddToolDialog from "@/components/AddToolDialog";
 import Logo from "@/components/Logo";
 import ThemeToggle from "@/components/ThemeToggle";
 
+// Import AI tool images
+import chatgptImage from "@/assets/chatgpt.jpg";
+import dalle3Image from "@/assets/dalle3.jpg";
+import githubCopilotImage from "@/assets/github-copilot.jpg";
+import midjourneyImage from "@/assets/midjourney.jpg";
+import grammarlyImage from "@/assets/grammarly.jpg";
+import runwaymlImage from "@/assets/runwayml.jpg";
+import claudeImage from "@/assets/claude.jpg";
+import stableDiffusionImage from "@/assets/stable-diffusion.jpg";
+import cursorImage from "@/assets/cursor.jpg";
+import whisperImage from "@/assets/whisper.jpg";
+import elevenlabsImage from "@/assets/elevenlabs.jpg";
+import jupyterAiImage from "@/assets/jupyter-ai.jpg";
+import gammaImage from "@/assets/gamma.jpg";
+import beautifulAiImage from "@/assets/beautiful-ai.jpg";
+import tomeImage from "@/assets/tome.jpg";
+import slidesgoAiImage from "@/assets/slidesgo-ai.jpg";
+import decktopusImage from "@/assets/decktopus.jpg";
+import jasperAiImage from "@/assets/jasper-ai.jpg";
+import copyAiImage from "@/assets/copy-ai.jpg";
+import lumaAiImage from "@/assets/luma-ai.jpg";
+
 interface AITool {
   id: string;
   name: string;
@@ -25,6 +47,7 @@ interface AITool {
   tags: string[];
   addedBy?: string;
   icon: string;
+  image: string;
 }
 
 const mockTools: AITool[] = [
@@ -37,7 +60,8 @@ const mockTools: AITool[] = [
     rating: 4.8,
     isPremium: false,
     tags: ["chatbot", "writing", "coding"],
-    icon: "MessageSquare"
+    icon: "MessageSquare",
+    image: chatgptImage
   },
   {
     id: "2",
@@ -48,7 +72,8 @@ const mockTools: AITool[] = [
     rating: 4.7,
     isPremium: true,
     tags: ["image", "art", "creative"],
-    icon: "Image"
+    icon: "Image",
+    image: dalle3Image
   },
   {
     id: "3",
@@ -59,7 +84,8 @@ const mockTools: AITool[] = [
     rating: 4.6,
     isPremium: true,
     tags: ["coding", "development", "autocomplete"],
-    icon: "Code"
+    icon: "Code",
+    image: githubCopilotImage
   },
   {
     id: "4",
@@ -70,7 +96,8 @@ const mockTools: AITool[] = [
     rating: 4.9,
     isPremium: true,
     tags: ["art", "discord", "creative"],
-    icon: "Palette"
+    icon: "Palette",
+    image: midjourneyImage
   },
   {
     id: "5",
@@ -81,7 +108,8 @@ const mockTools: AITool[] = [
     rating: 4.5,
     isPremium: false,
     tags: ["grammar", "writing", "editing"],
-    icon: "Edit3"
+    icon: "Edit3",
+    image: grammarlyImage
   },
   {
     id: "6",
@@ -92,7 +120,8 @@ const mockTools: AITool[] = [
     rating: 4.4,
     isPremium: true,
     tags: ["video", "editing", "creative"],
-    icon: "Video"
+    icon: "Video",
+    image: runwaymlImage
   },
   {
     id: "7",
@@ -103,7 +132,8 @@ const mockTools: AITool[] = [
     rating: 4.7,
     isPremium: false,
     tags: ["chatbot", "analysis", "writing"],
-    icon: "Bot"
+    icon: "Bot",
+    image: claudeImage
   },
   {
     id: "8",
@@ -114,7 +144,8 @@ const mockTools: AITool[] = [
     rating: 4.6,
     isPremium: false,
     tags: ["open-source", "image", "art"],
-    icon: "Sparkles"
+    icon: "Sparkles",
+    image: stableDiffusionImage
   },
   {
     id: "9",
@@ -125,7 +156,8 @@ const mockTools: AITool[] = [
     rating: 4.8,
     isPremium: true,
     tags: ["coding", "editor", "ai-pair"],
-    icon: "Zap"
+    icon: "Zap",
+    image: cursorImage
   },
   {
     id: "10",
@@ -136,7 +168,8 @@ const mockTools: AITool[] = [
     rating: 4.5,
     isPremium: false,
     tags: ["speech", "transcription", "audio"],
-    icon: "Mic"
+    icon: "Mic",
+    image: whisperImage
   },
   {
     id: "11",
@@ -147,7 +180,8 @@ const mockTools: AITool[] = [
     rating: 4.7,
     isPremium: true,
     tags: ["voice", "synthesis", "cloning"],
-    icon: "Volume2"
+    icon: "Volume2",
+    image: elevenlabsImage
   },
   {
     id: "12",
@@ -158,7 +192,8 @@ const mockTools: AITool[] = [
     rating: 4.3,
     isPremium: false,
     tags: ["data", "jupyter", "ml"],
-    icon: "BarChart"
+    icon: "BarChart",
+    image: jupyterAiImage
   },
   {
     id: "13",
@@ -169,7 +204,8 @@ const mockTools: AITool[] = [
     rating: 4.6,
     isPremium: true,
     tags: ["presentations", "slides", "automation"],
-    icon: "Presentation"
+    icon: "Presentation",
+    image: gammaImage
   },
   {
     id: "14",
@@ -180,7 +216,8 @@ const mockTools: AITool[] = [
     rating: 4.4,
     isPremium: true,
     tags: ["presentations", "design", "templates"],
-    icon: "Layers"
+    icon: "Layers",
+    image: beautifulAiImage
   },
   {
     id: "15",
@@ -191,7 +228,8 @@ const mockTools: AITool[] = [
     rating: 4.5,
     isPremium: true,
     tags: ["storytelling", "presentations", "documents"],
-    icon: "FileText"
+    icon: "FileText",
+    image: tomeImage
   },
   {
     id: "16",
@@ -202,7 +240,8 @@ const mockTools: AITool[] = [
     rating: 4.3,
     isPremium: false,
     tags: ["templates", "presentations", "generator"],
-    icon: "Presentation"
+    icon: "Presentation",
+    image: slidesgoAiImage
   },
   {
     id: "17",
@@ -213,7 +252,8 @@ const mockTools: AITool[] = [
     rating: 4.2,
     isPremium: true,
     tags: ["presentations", "ai-design", "templates"],
-    icon: "Layers"
+    icon: "Layers",
+    image: decktopusImage
   },
   {
     id: "18",
@@ -224,7 +264,8 @@ const mockTools: AITool[] = [
     rating: 4.4,
     isPremium: true,
     tags: ["marketing", "copywriting", "content"],
-    icon: "Pen"
+    icon: "Pen",
+    image: jasperAiImage
   },
   {
     id: "19",
@@ -235,7 +276,8 @@ const mockTools: AITool[] = [
     rating: 4.3,
     isPremium: true,
     tags: ["copywriting", "marketing", "sales"],
-    icon: "Edit3"
+    icon: "Edit3",
+    image: copyAiImage
   },
   {
     id: "20",
@@ -246,7 +288,8 @@ const mockTools: AITool[] = [
     rating: 4.5,
     isPremium: true,
     tags: ["3d", "capture", "rendering"],
-    icon: "Camera"
+    icon: "Camera",
+    image: lumaAiImage
   }
 ];
 
@@ -466,17 +509,24 @@ const Index = () => {
                 style={{ animationDelay: `${index * 50}ms` }}
               >
                 <CardHeader>
+                  <div className="relative mb-4">
+                    <img 
+                      src={tool.image} 
+                      alt={tool.name}
+                      className="w-full h-48 object-cover rounded-lg transition-transform duration-300 group-hover:scale-105"
+                    />
+                    <div className="absolute top-2 right-2 bg-background/80 backdrop-blur-sm rounded-lg p-2">
+                      {(() => {
+                        const IconComponent = getIconComponent(tool.icon);
+                        return <IconComponent className="w-6 h-6 text-primary" />;
+                      })()}
+                    </div>
+                  </div>
                   <div className="flex items-start justify-between">
                     <div className="flex-1">
-                      <div className="flex items-center gap-3 mb-2">
-                        {(() => {
-                          const IconComponent = getIconComponent(tool.icon);
-                          return <IconComponent className="w-8 h-8 text-primary group-hover:scale-110 transition-transform duration-300" />;
-                        })()}
-                        <CardTitle className="text-foreground group-hover:text-primary transition-colors duration-300">
-                          {tool.name}
-                        </CardTitle>
-                      </div>
+                      <CardTitle className="text-foreground group-hover:text-primary transition-colors duration-300">
+                        {tool.name}
+                      </CardTitle>
                       <div className="flex items-center gap-2 mt-2">
                         <Badge variant="secondary" className="transition-all duration-300 group-hover:scale-105">
                           {tool.category}
