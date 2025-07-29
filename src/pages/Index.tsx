@@ -7,7 +7,7 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, Di
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Search, Filter, Plus, LogIn, User, Star, ExternalLink, MessageSquare, Palette, Code, Pen, Video, Mic, BarChart, Presentation, Zap, Bot, Camera, Layers, Volume2, FileText, Sparkles, Edit3, Image } from "lucide-react";
+import { Search, Filter, Plus, LogIn, User, Star, ExternalLink, MessageSquare, Palette, Code, Pen, Video, Mic, BarChart, Presentation, Zap, Bot, Camera, Layers, Volume2, FileText, Sparkles, Edit3, Image, Heart } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import AuthDialog from "@/components/AuthDialog";
 import AddToolDialog from "@/components/AddToolDialog";
@@ -317,13 +317,23 @@ const Index = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All Categories");
   const [selectedPricing, setSelectedPricing] = useState("All Tools");
+  const [showFavoritesOnly, setShowFavoritesOnly] = useState(false);
+  const [favorites, setFavorites] = useState<Set<string>>(new Set());
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState<string | null>(null);
   const { toast } = useToast();
 
+  // Load favorites from localStorage on mount
+  useEffect(() => {
+    const savedFavorites = localStorage.getItem('ai-galaxy-favorites');
+    if (savedFavorites) {
+      setFavorites(new Set(JSON.parse(savedFavorites)));
+    }
+  }, []);
+
   useEffect(() => {
     filterTools();
-  }, [searchTerm, selectedCategory, selectedPricing, tools]);
+  }, [searchTerm, selectedCategory, selectedPricing, showFavoritesOnly, tools, favorites]);
 
   const filterTools = () => {
     let filtered = tools;
@@ -348,7 +358,30 @@ const Index = () => {
       }
     }
 
+    if (showFavoritesOnly) {
+      filtered = filtered.filter(tool => favorites.has(tool.id));
+    }
+
     setFilteredTools(filtered);
+  };
+
+  const toggleFavorite = (toolId: string) => {
+    const newFavorites = new Set(favorites);
+    if (newFavorites.has(toolId)) {
+      newFavorites.delete(toolId);
+      toast({
+        title: "Removed from Favorites",
+        description: "Tool removed from your favorites",
+      });
+    } else {
+      newFavorites.add(toolId);
+      toast({
+        title: "Added to Favorites",
+        description: "Tool added to your favorites",
+      });
+    }
+    setFavorites(newFavorites);
+    localStorage.setItem('ai-galaxy-favorites', JSON.stringify(Array.from(newFavorites)));
   };
 
   const getIconComponent = (iconName: string) => {
@@ -488,6 +521,15 @@ const Index = () => {
               </SelectContent>
             </Select>
 
+            <Button
+              variant={showFavoritesOnly ? "default" : "outline"}
+              onClick={() => setShowFavoritesOnly(!showFavoritesOnly)}
+              className="transition-all duration-300 hover:scale-105"
+            >
+              <Heart className={`w-4 h-4 mr-2 ${showFavoritesOnly ? 'fill-current' : ''}`} />
+              {showFavoritesOnly ? 'All Tools' : 'Favorites'}
+            </Button>
+
             <AddToolDialog onAddTool={handleAddTool}>
               <Button className="bg-gradient-to-r from-primary to-secondary hover:opacity-90 transition-all duration-300 hover:scale-105 hover:shadow-lg">
                 <Plus className="w-4 h-4 mr-2" />
@@ -515,11 +557,28 @@ const Index = () => {
                       alt={tool.name}
                       className="w-full h-48 object-cover rounded-lg transition-transform duration-300 group-hover:scale-105"
                     />
-                    <div className="absolute top-2 right-2 bg-background/80 backdrop-blur-sm rounded-lg p-2">
-                      {(() => {
-                        const IconComponent = getIconComponent(tool.icon);
-                        return <IconComponent className="w-6 h-6 text-primary" />;
-                      })()}
+                    <div className="absolute top-2 right-2 flex gap-2">
+                      <div className="bg-background/80 backdrop-blur-sm rounded-lg p-2">
+                        {(() => {
+                          const IconComponent = getIconComponent(tool.icon);
+                          return <IconComponent className="w-6 h-6 text-primary" />;
+                        })()}
+                      </div>
+                      <Button
+                        size="sm"
+                        variant="ghost"
+                        className="bg-background/80 backdrop-blur-sm p-2 h-auto"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          toggleFavorite(tool.id);
+                        }}
+                      >
+                        <Heart className={`w-5 h-5 transition-all duration-300 ${
+                          favorites.has(tool.id) 
+                            ? 'fill-red-500 text-red-500' 
+                            : 'text-muted-foreground hover:text-red-500'
+                        }`} />
+                      </Button>
                     </div>
                   </div>
                   <div className="flex items-start justify-between">
